@@ -15,6 +15,7 @@ import { authenticateJWT } from "./middlewares/passport";
 import { NodeEnv } from "./constants/server";
 
 const app = express();
+console.log(process.env.DB_NAME)
 
 // Express configuration
 app.set("trust proxy", process.env.USE_PROXY === "true");
@@ -40,7 +41,6 @@ app.post("/auth/anonymous", AuthCtrl.anonymous);
 
 // JWT verification
 app.use(authenticateJWT());
-
 // Routes
 Routes(app);
 
