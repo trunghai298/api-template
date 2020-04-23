@@ -15,7 +15,8 @@ import { authenticateJWT } from "./middlewares/passport";
 import { NodeEnv } from "./constants/server";
 
 const app = express();
-console.log(process.env.DB_NAME)
+const compare = require('tsscmp');
+const auth = require('basic-auth');
 
 // Express configuration
 app.set("trust proxy", process.env.USE_PROXY === "true");
@@ -36,11 +37,32 @@ app.use(initCtx());
 app.use(initIP());
 app.use(initLanguages());
 
+
+function check(name, pass) {
+  var valid = true;
+
+  valid = compare(name, 'root') && valid;
+  valid = compare(pass, 'root') && valid;
+  return valid;
+}
+const basicAuth = (req, res, next) => {
+  const user = auth(req);
+  if (!user || !check(user.name, user.pass)) {
+    res.statusCode = 401;
+    res.setHeader('WWW-Authenticate', 'Basic realm="example"');
+    res.end('Access denied');
+  } else {
+    next();
+  }
+};
+
+app.get('/', basicAuth);
+
 // Allow to generate anonymous JWT for new user
 app.post("/auth/anonymous", AuthCtrl.anonymous);
 
 // JWT verification
-app.use(authenticateJWT());
+// app.use(authenticateJWT());
 // Routes
 Routes(app);
 
