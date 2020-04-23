@@ -1,0 +1,5 @@
+--timeout 10000
+--reporter spec
+--recursive
+--require test/setup
+--require ./babel-register.js
