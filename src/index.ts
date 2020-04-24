@@ -10,7 +10,7 @@ const PORT = process.env.SERVER_PORT || SERVER_PORT;
   app.set("port", PORT);
   const appName = process.env.APP_NAME || APP_NAME_DEFAULT;
 
-  await MySQLClient.sync();
+  // await MySQLClient.sync();
 
   app.listen(PORT, () => {
     LogClient.info(

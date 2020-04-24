@@ -4,6 +4,10 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "@babel/code-frame": "^7.8.3",
+    "@babel/helpers": "^7.9.2",
+    "@babel/polyfill": "^7.8.7",
+    "@babel/runtime": "^7.9.2",
     "@types/body-parser": "^1.17.0",
     "@types/cors": "^2.8.4",
     "@types/elasticsearch": "^5.0.29",
@@ -40,7 +44,7 @@
     "@babel/plugin-proposal-object-rest-spread": "^7.2.0",
     "@babel/preset-env": "^7.9.5",
     "@babel/preset-typescript": "^7.1.0",
-    "@babel/register": "^7.0.0",
+    "@babel/register": "^7.9.0",
     "@commitlint/cli": "^7.5.0",
     "@commitlint/config-conventional": "^7.5.0",
     "@types/chai": "^4.1.7",
@@ -70,7 +74,8 @@
     "typescript": "^3.2.2"
   },
   "scripts": {
-    "dev": "nodemon --delay 2 --watch src/ --exec 'babel-node src/index.ts' --extensions \".ts,.tsx\" -e ts",
+    "test-mysql": "babel-node --max_old_space_size=8000  --extensions \".ts\" src/scripts/test.ts",
+    "dev": "nodemon --delay 2 --watch src/ --exec babel-node src/index.ts --extensions \".ts,.tsx\" -e ts",
     "test": "NODE_ENV=test mocha test/**/*.ts",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "start": "cd dist && node index",
